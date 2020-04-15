@@ -10,8 +10,8 @@ stages:
 before_install:
   - chmod +x gradlew
   
-install:
-  - npm install newman
+#install:
+ # - npm install newman
     
 jobs:
   include:
