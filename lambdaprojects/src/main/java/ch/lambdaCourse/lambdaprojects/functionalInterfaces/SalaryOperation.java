@@ -1,4 +1,6 @@
-package ch.lambdaCourse.lambdaprojects;
+package ch.lambdaCourse.lambdaprojects.functionalInterfaces;
+
+import ch.lambdaCourse.lambdaprojects.user.User;
 
 import java.util.List;
 import java.util.Optional;
