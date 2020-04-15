@@ -37,7 +37,7 @@ public class UserController {
         return new ResponseEntity<>(userMapper.toDTOs(users), HttpStatus.OK);
     }
 
-    @PostMapping("")
+    @PostMapping("/users")
     @PreAuthorize("hasAuthority('USER_CREATE')")
     public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO user) {
         user = userMapper.toDTO(userService.save(userMapper.fromDTO(user)));
