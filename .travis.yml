@@ -7,18 +7,18 @@ stages:
   - continousIntegration
   - continousDelivery
 
-#before_install:
-  #- chmod +x gradlew
+before_install:
+  - chmod +x gradlew
 
-#addons:
-  #sonarcloud:
-    #organization: $SONAR_USER
-    #token: $SONAR_TOKEN
+addons:
+  sonarcloud:
+    organization: $SONAR_USER
+    token: $SONAR_TOKEN
 
 jobs:
   include:
     - stage: continousIntegration
-      #script: ./gradlew sonarqube
+      script: ./gradlew sonarqube
     - stage: continousDelivery
       deploy:
         provider: heroku
