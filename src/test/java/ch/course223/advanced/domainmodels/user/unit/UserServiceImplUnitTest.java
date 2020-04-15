@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource("classpath:application-test.properties")
