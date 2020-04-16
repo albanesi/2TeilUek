@@ -7,7 +7,6 @@ import ch.course223.advanced.domainmodels.role.RoleDTO;
 import ch.course223.advanced.domainmodels.user.User;
 import ch.course223.advanced.domainmodels.user.UserDTO;
 import ch.course223.advanced.domainmodels.user.UserRepository;
-import org.apache.commons.lang3.ArrayUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,13 +28,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.isA;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;import java.util.UUID;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,8 +50,7 @@ public class UserIntegrationTest {
     private MockMvc mvc;
 
     @Before
-    public void setUp() {
-    }
+    public void setUp(){}
 
     @Test
     public void findById_requestUserById_returnsUser() throws Exception {
@@ -81,37 +73,9 @@ public class UserIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(userDTOToBeTestedAgainst.getFirstName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(userDTOToBeTestedAgainst.getLastName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(userDTOToBeTestedAgainst.getEmail()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roles[*].name").value(containsInAnyOrder(userDTOToBeTestedAgainst.getRoles().stream().map(RoleDTO::getName).toArray())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roles[*].authorities[*].name").value(containsInAnyOrder(userDTOToBeTestedAgainst.getRoles().stream().map(RoleDTO::getAuthorities).flatMap(Collection::stream).map(AuthorityDTO::getName).toArray())));
-    }
-
-    @Test
-    public void findAll_requestAllUsers_returnsAllUsers() throws Exception {
-        UUID uuidToBeTestedAgainst = UUID.randomUUID();
-
-
-        User userToBeTestedAgainst = new User().setFirstName("John1").setLastName("Doe1").setEmail("1john.doe@noseryoung.ch").setEnabled(true).setPassword(new BCryptPasswordEncoder().encode(uuidToBeTestedAgainst.randomUUID().toString()));
-        User user1ToBeTestedAgainst = new User().setFirstName("John").setLastName("Doe").setEmail("john.doe@noseryoung.ch").setEnabled(true).setPassword(new BCryptPasswordEncoder().encode(uuidToBeTestedAgainst.randomUUID().toString()));
-
-        userRepository.save(userToBeTestedAgainst);
-        userRepository.save(user1ToBeTestedAgainst);
-
-        UserDTO userDTOToBeTestedAgainst = new UserDTO(userToBeTestedAgainst.getId()).setFirstName("John1").setLastName("Doe1").setEmail("1john.doe@noseryoung.ch");
-        UserDTO user2DTOToBeTestedAgainst = new UserDTO(user1ToBeTestedAgainst.getId()).setFirstName("John").setLastName("Doe").setEmail("john.doe@noseryoung.ch");
-        List<UserDTO> listOfUserDTOSToBeTestedAgainst = Arrays.asList(userDTOToBeTestedAgainst,user2DTOToBeTestedAgainst);
-
-        mvc.perform(
-                MockMvcRequestBuilders.get("/users")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.*", isA(ArrayList.class)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.*", hasSize(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].firstName").value(containsInAnyOrder(listOfUserDTOSToBeTestedAgainst.stream().map(UserDTO::getFirstName).toArray())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].lastName").value(containsInAnyOrder(listOfUserDTOSToBeTestedAgainst.stream().map(UserDTO::getLastName).toArray())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[*].email").value(containsInAnyOrder(listOfUserDTOSToBeTestedAgainst.stream().map(UserDTO::getEmail).toArray())));
-
-
-
-
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles[*].name").value(Matchers.containsInAnyOrder(userDTOToBeTestedAgainst.getRoles().stream().map(RoleDTO::getName).toArray())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles[*].authorities[*].name").value(Matchers.containsInAnyOrder(userDTOToBeTestedAgainst.getRoles().stream().map(RoleDTO::getAuthorities).flatMap(Collection::stream).map(AuthorityDTO::getName).toArray())));
     }
 }
+
 

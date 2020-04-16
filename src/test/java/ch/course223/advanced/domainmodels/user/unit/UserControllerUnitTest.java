@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -125,7 +125,7 @@ public class UserControllerUnitTest {
         verify(userService, times(1)).findAll();
     }
 
-    /*@Test
+    @Test
     @WithMockUser
     public void create_deliverUserDTOToCreate_returnCreatedUserDTO() throws Exception {
         String userDTOAsJsonString = new ObjectMapper().writeValueAsString(userDTOToBeTestedAgainst);
@@ -158,7 +158,7 @@ public class UserControllerUnitTest {
         Assertions.assertThat(userArgumentCaptor.getValue().getFirstName().equals(userDTOToBeTestedAgainst.getEmail()));
         Assertions.assertThat(userArgumentCaptor.getValue().getRoles().stream().map(Role::getName).toArray()).containsExactlyInAnyOrder(userDTOToBeTestedAgainst.getRoles().stream().map(RoleDTO::getName).toArray());
         Assertions.assertThat(userArgumentCaptor.getValue().getRoles().stream().map(Role::getAuthorities).flatMap(Collection::stream).map(Authority::getName).toArray()).containsExactlyInAnyOrder(userDTOToBeTestedAgainst.getRoles().stream().map(RoleDTO::getAuthorities).flatMap(Collection::stream).map(AuthorityDTO::getName).toArray());
-    }*/
+    }
 
     @Test
     @WithMockUser
